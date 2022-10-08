@@ -1,0 +1,18 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  background-image: url("../../img/cards-background.jpg");
+  background-size: contain;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+.filterBoxes{
+  z-index: 2;
+}
+.container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0 100px 0 100px;
+}

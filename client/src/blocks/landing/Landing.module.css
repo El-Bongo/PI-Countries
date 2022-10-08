@@ -1,0 +1,77 @@
+*{
+  color: var(--text);
+}
+a{
+  text-decoration: none;
+}
+.main_container{
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.image_container a{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+}
+.image{
+  background-image: url("../../img/Background-landing.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+.main_redirection{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 20%;
+  top: 0;
+  left: 0;
+  transform: translate(50%, 100%);
+}
+.main_redirection span{
+  color: black;
+  background-color: yellow;
+  padding: 0 5px 0 5px;
+}
+
+.btn_container{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 20px ;
+}
+.btn{
+  position: absolute;
+  background-color: var(--main);
+  width: 200px;
+  height: 40px;
+  transition: 0.5s all;
+  border-bottom: 1px solid transparent;
+}
+.btn_container p {
+  text-align: center;
+  width: 200px;
+  z-index: 1;
+  position: absolute;
+  transition: 0.1s all;
+}
+.btn_container:hover > p{
+  transform: scale(1.02);
+  color: black;
+}
+.btn_container p:hover + .btn {
+  transform: scale(1.1);
+  border-bottom: 1px solid var(--text);
+}
+.btn:hover{
+  transform: scale(1.1);
+  border-bottom: 1px solid var(--text);
+}

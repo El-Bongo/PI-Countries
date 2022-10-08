@@ -1,0 +1,197 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("../../img/cards-background.jpg");
+  background-size: contain;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  height: 100%;
+}
+.container form{
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  background-color: var(--card);
+  width: 60%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.container form div{
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+label{
+  width: 400px;
+}
+input{
+  width: 400px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--opac);
+  transition: 0.5s all;
+}
+input:focus{
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
+.country_add{
+  width: 400px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: stretch;
+  flex-wrap: wrap;
+}
+.country_add p{
+  border-bottom: 2px solid var(--main);
+  background-color: var(--clear);
+  width: 60px;
+  height: auto;
+  margin: 2px 5px 2px 5px;
+  padding: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.country_add p span{
+  border-radius: 2px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.country_add p span:hover{
+  color:var(--clear);
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background-color: rgb(233, 94, 94);
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.checkbox{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 2px;
+}
+.checkbox label{
+  width: 100px;
+}
+.checkbox input{
+  width: 20px;
+}
+
+.menu,
+.submenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+.menu > li {
+  margin: 20px;
+  width: 400px;
+  z-index: 2;
+  background: var(--card);
+  float: left;
+  text-align: center;
+  position: relative;
+  border: 1px solid var(--opac);
+}
+.menu p {
+  display: block;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+  cursor: pointer;
+}
+.menu li:hover {
+  background: var(--clear);
+}
+.menu > li > p {
+  padding: 0.5em 2em;
+}
+.submenu {
+  position: absolute;
+  width: 400px;
+  max-height: 400px;
+  left: 50%; margin-left: -200px;
+  transform-origin: left top;
+  overflow-y: scroll;
+}
+.submenu li {
+  background-color: var(--main);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.submenu > li > p {
+  padding: 0.5em 2em;		
+  color: var(--text);	
+}
+.submenu > li > p:hover {
+  color: var(--clear);
+}
+.submenu > li::after {
+  content: '';
+  position: absolute;
+  top: -125%;
+  height: 100%;
+  width: 100%;			
+  box-shadow: 0 0 50px rgba(0, 0, 0, .9);			
+}		
+.submenu > li:nth-child(odd){
+  transform: translateX(0);
+}
+.submenu > li:nth-child(odd)::after {
+  transform: rotate(3deg);
+}				
+.submenu > li:nth-child(even){
+  transform: translateX(0);
+}
+.submenu > li:nth-child(even)::after {
+  transform: rotate(3deg);
+}
+.submenu,
+.submenu li {
+  opacity: 0;
+  visibility: hidden;			
+}
+.submenu li {
+  transition: .2s ease transform;
+}
+.menu > li:hover .submenu,
+.menu > li:hover .submenu li {
+  opacity: 1;
+  visibility: visible;
+}
+
+form button{
+  background-color: var(--clear);
+  width: 200px;
+  height: 40px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: 0.5s all;
+  cursor: pointer;
+}
+form button:hover{
+  border: 1px solid var(--text)
+
+}

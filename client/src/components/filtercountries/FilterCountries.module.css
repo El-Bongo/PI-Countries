@@ -1,0 +1,195 @@
+/* .menu,
+.submenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+.menu > li {
+  margin: 20px;
+  z-index: 2;
+  background: var(--main);
+  float: left;
+  position: relative;
+  transform: skewX(10deg);
+  border-bottom: 1px solid var(--secondary);
+}
+.menu p {
+  display: block;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: Arial, Helvetica;
+  font-size: 14px;
+  color: var(--clear);
+  margin: 0;
+  cursor: pointer;
+}
+.menu li:hover {
+  background: var(--secondary);
+}
+.menu > li > p {
+  transform: skewX(-10deg);
+  padding: 1em 2em;
+}
+.submenu {
+  position: absolute;
+  width: 200px;
+  left: 50%; margin-left: -100px;
+  transform: skewX(-10deg);
+  transform-origin: left top;
+}
+.submenu li {
+  background-color: var(--main);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--secondary)
+}
+.submenu li:hover {
+  border: 1px solid transparent
+}
+.submenu > li > p {
+  padding: 1em 2em;		
+  color: var(--text);	
+}
+.submenu > li > p:hover {
+  color: var(--clear);
+}
+.submenu > li::after {
+  content: '';
+  position: absolute;
+  top: -125%;
+  height: 100%;
+  width: 100%;			
+  box-shadow: 0 0 50px rgba(0, 0, 0, .9);			
+}		
+.submenu > li:nth-child(odd){
+  transform: skewX(-10deg) translateX(0);
+}
+.submenu > li:nth-child(odd) > p {
+  transform: skewX(10deg);
+}
+.submenu > li:nth-child(odd)::after {
+  right: -50%;
+  transform: skewX(-10deg) rotate(3deg);
+}				
+.submenu > li:nth-child(even){
+  transform: skewX(10deg) translateX(0);
+}
+.submenu > li:nth-child(even) > p {
+  transform: skewX(-10deg);
+}
+.submenu > li:nth-child(even)::after {
+  left: -50%;
+  transform: skewX(10deg) rotate(3deg);
+}
+.submenu,
+.submenu li {
+  opacity: 0;
+  visibility: hidden;			
+}
+.submenu li {
+  transition: .2s ease transform;
+}
+.menu > li:hover .submenu,
+.menu > li:hover .submenu li {
+  opacity: 1;
+  visibility: visible;
+}
+.menu > li:hover .submenu li:nth-child(even){
+  transform: skewX(10deg) translateX(5px);			
+}
+.menu > li:hover .submenu li:nth-child(odd){
+  transform: skewX(-10deg) translateX(-5px);			
+} */
+.menu,
+.submenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+.menu > li {
+  margin: 20px;
+  width: 200px;
+  z-index: 2;
+  background: var(--main);
+  float: left;
+  text-align: center;
+  position: relative;
+}
+.menu p {
+  display: block;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--clear);
+  margin: 0;
+  cursor: pointer;
+}
+.menu li:hover {
+  background: var(--secondary);
+}
+.menu > li > p {
+  padding: 1em 2em;
+}
+.submenu {
+  position: absolute;
+  width: 200px;
+  left: 50%; margin-left: -100px;
+  transform-origin: left top;
+}
+.submenu li {
+  background-color: var(--main);
+  position: relative;
+  overflow: hidden;
+}
+.submenu > li > p {
+  padding: 1em 2em;		
+  color: var(--text);	
+}
+.submenu > li > p:hover {
+  color: var(--clear);
+}
+.submenu > li::after {
+  content: '';
+  position: absolute;
+  top: -125%;
+  height: 100%;
+  width: 100%;			
+  box-shadow: 0 0 50px rgba(0, 0, 0, .9);			
+}		
+.submenu > li:nth-child(odd){
+  transform: translateX(0);
+}
+.submenu > li:nth-child(odd)::after {
+  transform: rotate(3deg);
+}				
+.submenu > li:nth-child(even){
+  transform: translateX(0);
+}
+.submenu > li:nth-child(even)::after {
+  transform: rotate(3deg);
+}
+.submenu,
+.submenu li {
+  opacity: 0;
+  visibility: hidden;			
+}
+.submenu li {
+  transition: .2s ease transform;
+}
+.menu > li:hover .submenu,
+.menu > li:hover .submenu li {
+  opacity: 1;
+  visibility: visible;
+}
