@@ -13,7 +13,7 @@ const CardContainer = () =>{
   let countriesList = useSelector(state => state.filter_state)
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [countriesPP, setCoutriesPP] = useState(10)
+  const [countriesPP] = useState(10)
 
   useEffect(()=>{
     dispatch(getAllCountries())

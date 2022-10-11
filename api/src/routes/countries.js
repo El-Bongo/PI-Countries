@@ -3,7 +3,7 @@ const router = Router()
 const axios = require("axios")
 const {Op} = require("sequelize")
 
-const {Country} = require("../db")
+const {Country, Activity , Country_activities} = require("../db")
 
 router.get("/", async (req, res)=>{
   const {name} = req.query
@@ -57,16 +57,43 @@ router.get("/", async (req, res)=>{
 router.get("/:id", async (req, res) =>{
   try {
     let id = req.params.id
-    console.log(id)
-    const data = await Country.findAll({
+    const data = await Country.findOne({
       where: {
         id : {
           [Op.like] : `%${id}`
         }
       }
     })
-    res.status(200).json(data)
+    const countryActivities = await Country_activities.findAll({
+      where: {
+        countryId : {
+          [Op.like] : `%${id}`
+        }
+      }
+    })
+    let arrayAct = []
+    for (let i = 0; i < countryActivities.length; i++) {
+      arrayAct.push(countryActivities[i].dataValues["activityId"])
+    }
+    if(arrayAct.length >= 1){
+      let cleanActivities = []
+      for (let i = 0; i < arrayAct.length; i++) {
+        let activity = await Activity.findOne({
+          where:{
+            id:{
+              [Op.eq] : arrayAct[i]
+            }
+          }
+        })
+        cleanActivities.push(activity)
+      }
+      data.setDataValue('activities', cleanActivities)
+      res.status(200).send(data)
+    }else{
+      res.status(200).send(data)
+    }
   } catch (error) {
+    console.log(error)
     res.status(404).send("The Id of that country doesnt exist, please try again")
   }
 })

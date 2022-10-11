@@ -11,7 +11,7 @@ const SearchNav = () =>{
 
   function handleSubmit(e){
     e.preventDefault()
-    if(e === "") alert("There is nothing to search, try again!")
+    if(e.target.value === "") alert("There is nothing to search, try again!")
     else{
       dispatch(getCountry(countrySearch))
       setCountrySearch("")

@@ -35,7 +35,7 @@ const FilterCountries = () =>{
   return(
     <div>
       <ul className={`${styles.menu} ${styles.cf}`}>
-        <li onClick={e => handleReset()}>
+        <li onClick={() => handleReset()}>
           <p>Reset filters</p>
         </li>
         <li>

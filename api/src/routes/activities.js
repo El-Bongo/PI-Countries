@@ -19,9 +19,7 @@ router.post("/", async (req, res) =>{
     })
     countries.map(async e => {
       const addOn = await Country.findByPk(e)
-      // console.log(addOn)
       await addOn.addActivity(activity[0].dataValues.id)
-      // console.log(activity[0].dataValues)
     })
     res.status(201).send(activity)
   } catch (error) {

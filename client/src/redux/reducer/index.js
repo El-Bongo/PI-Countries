@@ -18,7 +18,7 @@ const rootReducer = (state = initialState, action) =>{
     case types.GET_SINGLE_COUNTRY:
       return {
         ...state,
-        country: action.payload[0]
+        country: action.payload
       }
     case types.FILTER_BY_CONTINENT:
       let continentFilter = state.countries.filter(e => e.continent === action.payload)
@@ -72,6 +72,11 @@ const rootReducer = (state = initialState, action) =>{
         }
       }
       break;
+    case types.POST_ACTIONS:
+      console.log(action.payload)
+      return{
+            
+            }
     case types.RESET_FILTERS:
       return {
         ...state,
@@ -81,6 +86,11 @@ const rootReducer = (state = initialState, action) =>{
       return {
         ...state,
         filter_state: []
+      }
+    case types.CLEAN_COUNTRY:
+      return {
+        ...state,
+        country: {}
       }
     default:
       return {state:"default state"}

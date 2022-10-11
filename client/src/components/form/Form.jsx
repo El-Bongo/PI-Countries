@@ -8,50 +8,73 @@ const Form = () =>{
   const dispatch = useDispatch()
 
   let arrayDificulty = [1, 2, 3, 4, 5]
-  let arraySeasons = ["Summer", "Autumn", "Winter", "Spring"]
+  let arraySeason = ["Summer", "Autumn", "Winter", "Spring"]
 
-  const [name, setName] = useState("")
-  const [duration, setDuration] = useState("")
   const [dificulty, setDificulty] = useState(new Array(arrayDificulty.length).fill(false))
-  const [season, setSeason] = useState(new Array(arraySeasons.length).fill(false))
-  const [selectedCountry, setSelectedCountry] = useState([])
+  const [season, setSeason] = useState(new Array(arraySeason.length).fill(false))
 
   const [formInfo, setFormInfo] = useState({
-                                            name: name,
-                                            duration: duration,
+                                            name: "",
+                                            duration: 0,
                                             dificulty: 0,
                                             season: "",
                                             countries: []
                                             })
 
+  const [errors, setErrors] = useState({})
+  const [submit, setSubmit] = useState(false)
+
   useEffect(()=>{
     if(!countries) dispatch(getAllCountries())
-  },[dispatch])
+    if(Object.keys(errors).length === 0){
+      setSubmit(true)
+    }else{
+      setSubmit(false)
+    }
+    setErrors(validate(formInfo))
+  },[dispatch, formInfo])
 
   //Country select and unselect functions
   function handleCountrySelect(e) {
     let country = e.target.getAttribute('value')
-    let repeated = selectedCountry.includes(country)
-    if(repeated !== true) setSelectedCountry(selectedCountry.concat(country))
+    let repeated = formInfo.countries.includes(country)
+    if(repeated !== true){
+      setFormInfo({...formInfo, countries: formInfo.countries.concat(country)})
+    }
   }
   function handleCountryUnselect(e) {
     let data = e.target.parentElement.innerText.slice(0,3)
-    setSelectedCountry(selectedCountry.filter(e => e !== data))
+    setFormInfo({...formInfo, countries: formInfo.countries.filter(e => e !== data)})
+  }
+
+
+  function validate(input){
+    const errors = {}
+
+    if(!input.name) errors.name = ""
+    else if(input.name.length < 1) errors.name = "Name is require"
+    else if(!/[^a-z\s]/i.test(input.name) === false) errors.name = "The name can only contain letters"
+    else if(input.name.length < 3) errors.name = "The name is too short"
+    else if(input.name.length > 30) errors.name = "The name is too large"
+
+    if(input.duration < 1) errors.duration = ""
+    else if(!input.duration) errors.duration = "Duration is required"
+    else if(input.duration > 20000) errors.duration = "Damn ... thats too many hours ... dont you think? &#129300; "
+    else if(input.duration < 4) errors.duration = "So can you do that under 4 minutes? &#129488; "
+    return errors
   }
 
   //Error Handlers and checkers
-  function handlerNameError(value){
-    if(value === "") return ""
-    else if(!/[^a-z\s]/i.test(value) === false) return <h4>The name can only contain letters</h4>
-    else if(value.length < 3) return <h4>The name is too short</h4>
-    else if(value.length > 30) return <h4>The name is too large</h4>
+  function dinamicForm(input){
+    if(input.name === "name"){
+      setFormInfo({...formInfo, name: input.value})
+    }
+    if(input.name === "duration"){
+      setFormInfo({...formInfo, duration: input.value})
+    }
   }
-  function handlerDurationError(value){
-    if(!value) return ""
-    if(value > 20000) return <h4>Damn ... thats too many hours ... dont you think? &#129300;</h4>
-    if(value <= 0) return <h4>So can you do that under 4 minutes? &#129488;</h4>
-    if(value < 4) return <h4>So can you do that under 4 minutes? &#129488;</h4>
-  }
+
+
   function handleDificultyCheck(e){
     let checkIndex = e.target.value - 1
     let newArr = []
@@ -90,7 +113,21 @@ const Form = () =>{
   // Submit handler
   function handleSubmit(e){
     e.preventDefault();
-    dispatch(postActions(formInfo))
+    if(submit === false){
+      alert("Some fields are not right! check again.")
+    }else{
+      alert("New activity has been saved, have fun!")
+      setFormInfo({
+                  name: "",
+                  duration: 0,
+                  dificulty: 0,
+                  season: "",
+                  countries: []
+                  })
+      setDificulty(new Array(arrayDificulty.length).fill(false))
+      setSeason(new Array(arraySeason.length).fill(false))
+      dispatch(postActions(formInfo))
+    }
   }
 
   return(
@@ -99,18 +136,14 @@ const Form = () =>{
       <h1>Submit a new activity</h1>
         <div>
           <label> *Name: </label>
-          <input type="text" required value={name} onChange={(e) =>{ setName(e.target.value); setFormInfo({...formInfo, name: e.target.value}) }} />
-          {
-            handlerNameError(name)
-          }
+          <input type="text" required value={formInfo.name} name="name" onChange={(e) =>{dinamicForm(e.target) }} />
         </div>
+        <p className={styles.errors}>{errors.name}</p>
         <div>
           <label> *Duration(in minutes): </label>
-          <input type="number" min="1" required value={duration} onChange={e => {setDuration(e.target.value); setFormInfo({...formInfo, duration: e.target.value})}} />
-          {
-            handlerDurationError(duration)
-          }
+          <input type="number" min="1" required value={formInfo.duration} name="duration" onChange={e => {dinamicForm(e.target)}} />
         </div>
+        <p className={styles.errors}>{errors.duration}</p>
         <div>
           <label> *Dificulty(from 1 to 5): </label>
           <section className={styles.checkbox} onChange={e => handleDificultyCheck(e)}>
@@ -130,13 +163,12 @@ const Form = () =>{
           <label> *Season: </label>
           <section className={styles.checkbox} onChange={e => handleSeasonCheck(e)}>
           {
-            arraySeasons.map((d, i) => {
+            arraySeason.map((d, i) => {
               return (
                 <section key={i}>
                   <input type="checkbox" onChange={() => setFormInfo({...formInfo, season: d})} checked={season[i]} value={d} name={d}/>
                   <label>{d}</label>
                 </section>
-                
               )
             })
           }
@@ -146,7 +178,7 @@ const Form = () =>{
           <label> *Countries selected: </label>
           <section className={styles.country_add}>
             {
-              selectedCountry?.map(sc => {
+              formInfo.countries?.map(sc => {
                 return <p key={sc}>{sc}<span onClick={e => handleCountryUnselect(e)}> X </span></p>
               })
             }
@@ -155,7 +187,7 @@ const Form = () =>{
         <ul className={`${styles.menu} ${styles.cf}`}>
           <li>
             <p>Select a country</p>
-            <ul onClick={e => {handleCountrySelect(e); setFormInfo({...formInfo, countries: selectedCountry})}} className={styles.submenu}>
+            <ul onClick={e => {handleCountrySelect(e)}}  className={styles.submenu}>
                 {
                   countries?.map(c => {
                     return <li key={c.id} value={c.id} name={c.name}> {c.name}</li>
@@ -163,7 +195,7 @@ const Form = () =>{
                 }
             </ul>			
           </li>
-        </ul>			
+        </ul>
         <button type="submit">Send activity</button>
       </form>
     </div>

@@ -64,3 +64,8 @@ export const populationOrder = (data) =>{
     payload: data
   }
 }
+export const cleanCountry = () =>{
+  return {
+    type: types.CLEAN_COUNTRY,
+  }
+}
