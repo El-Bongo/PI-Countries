@@ -14,7 +14,8 @@ router.get("/", async (req, res)=>{
       }else{
         info = await axios.get(`https://restcountries.com/v3/name/${name}`)
       }
-      const countries = info.data.map(country => {
+      const countries = await Promise.all(
+        info.data.map(async country => {
         let capitals 
         if(country.capital === undefined){
           capitals = "This country has no capital"
@@ -38,9 +39,41 @@ router.get("/", async (req, res)=>{
           subregion: country.subregion,
           area: country.area,
           population: country.population,
+          activity: []
         }
-      return details
-      });
+
+        // ------------------------------------------------------------------------
+
+        const countryActivities = await Country_activities.findAll({
+          where: {
+            countryId : {
+              [Op.like] : `%${country.cca3}`
+            }
+          }
+        })
+        let arrayAct = []
+        for (let i = 0; i < countryActivities.length; i++) {
+          arrayAct.push(countryActivities[i].dataValues["activityId"])
+        }
+        if(arrayAct.length >= 1){
+          let cleanActivities = []
+          for (let i = 0; i < arrayAct.length; i++) {
+            let activity = await Activity.findOne({
+              where:{
+                id:{
+                  [Op.eq] : arrayAct[i]
+                }
+              }
+            })
+            cleanActivities.push(activity.dataValues)
+          }
+          let newArrayActivity = details.activity.concat(cleanActivities)
+          details.activity = newArrayActivity
+        }
+        // ------------------------------------------------------------------------
+        return details
+        })
+      )
       if(!name){
         Country.bulkCreate(countries, {updateOnDuplicate: ["id"]})
         .then(console.log("All the countries has been added to the Data Base"))
@@ -50,7 +83,7 @@ router.get("/", async (req, res)=>{
         console.log(`${name} has been found`)
       }
     } catch (error) {
-      res.status(404).send("A problem has occured, please try again")
+      res.status(404).send({error: error.message})
     }
 })
 
@@ -87,7 +120,7 @@ router.get("/:id", async (req, res) =>{
         })
         cleanActivities.push(activity)
       }
-      data.setDataValue('activities', cleanActivities)
+      data.setDataValue('activity', cleanActivities)
       res.status(200).send(data)
     }else{
       res.status(200).send(data)

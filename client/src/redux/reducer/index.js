@@ -73,9 +73,48 @@ const rootReducer = (state = initialState, action) =>{
       }
       break;
     case types.POST_ACTIONS:
-      console.log(action.payload)
+      return {
+        ...state
+            }
+      // if(state.activities === undefined){
+      //   return {
+      //     ...state,
+      //     activities: [].concat(action.payload)
+      //   }
+      // }else{
+      //   return {
+      //     ...state,
+      //     activities: [...state.activities].concat(action.payload)
+      //   }
+      // }
+    case types.GET_ACTIVITIES:
+      if(state.actions === undefined){
+        return{
+              ...state,
+              activities: [].concat(action.payload)
+              }
+      }else{
+        return{
+              ...state,
+              activities: [...state.activities, action.payload]
+              }
+      }
+    case types.FILTER_ACTIVITIES:
+      let countries = [...state.countries]
+      let arrCountries = []
+      for (let i = 0; i < countries.length; i++) {
+        if(countries[i].activity.length >= 1){
+          for (let j = 0; j < countries[i].activity.length; j++) {
+            console.log(countries[i].activity)
+            if(countries[i].activity[j].name === action.payload){
+              arrCountries.push(countries[i])
+            }
+          }
+        }
+      }
       return{
-            
+            ...state,
+            filter_state: arrCountries
             }
     case types.RESET_FILTERS:
       return {

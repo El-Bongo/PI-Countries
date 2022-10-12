@@ -44,7 +44,7 @@ const DetailCountryCard = () =>{
                 <h3>Area on square kilometers {country?.area} km²</h3>
               </section>
               {
-                country?.activities ? country.activities.map(act => {
+                country?.activity ? country.activity.map(act => {
                   return(
                     <div key={act.id}>
                       <h3>Activities:</h3>

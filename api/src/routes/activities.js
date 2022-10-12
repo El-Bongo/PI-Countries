@@ -3,6 +3,16 @@ const router = Router()
 const {Op} = require("sequelize")
 const {Activity, Country} = require("../db")
 
+router.get("/", async (req, res) =>{
+  try {
+    const allActivities = await Activity.findAll()
+    res.status(200).send(allActivities)
+  } catch (error) {
+    res.status(404).send(error)
+    console.log(error)
+  }
+})
+
 router.post("/", async (req, res) =>{
   const {name, dificulty, duration, season, countries} = req.body
   try {
@@ -23,6 +33,7 @@ router.post("/", async (req, res) =>{
     })
     res.status(201).send(activity)
   } catch (error) {
+    res.status(404).send(error)
     console.log(error)
   }
 

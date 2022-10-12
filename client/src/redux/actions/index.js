@@ -2,8 +2,7 @@ import axios from "axios"
 import {types} from "../types"
 
 export const getAllCountries = () => async (dispatch) =>{
-  let info
-  info = await axios.get("http://localhost:3001/countries")
+  let info = await axios.get("http://localhost:3001/countries")
   return dispatch({
     type: types.GET_ALL_COUNTRIES,
     payload: info.data
@@ -31,12 +30,24 @@ export const getSingleCountry = (id) => async (dispatch) =>{
     payload: info.data
   })
 }
+export const getActivities = () => async (dispatch) =>{
+  let data = await axios.get(`http://localhost:3001/activities`)
+  return dispatch({
+    type: types.GET_ACTIVITIES,
+    payload: data.data
+  })
+}
+export const filterByActivities = (data) => async (dispatch) =>{
+  return dispatch({
+    type: types.FILTER_ACTIVITIES,
+    payload: data
+  })
+}
 export const postActions = (values) => async(dispatch) =>{
   let data = await axios.post(`http://localhost:3001/activities` , values)
-  console.log(values)
   return dispatch({
     type: types.POST_ACTIONS,
-    payload: data
+    payload: data.data[0]
   })
 }
 

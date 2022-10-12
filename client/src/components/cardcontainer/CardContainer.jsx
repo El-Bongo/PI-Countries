@@ -37,6 +37,7 @@ const CardContainer = () =>{
     allCountries = countriesList
   }
 
+  console.log(countriesList)
 
   return(
     <div className={styles.main}>

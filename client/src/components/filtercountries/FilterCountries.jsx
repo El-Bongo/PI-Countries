@@ -1,10 +1,12 @@
 import React from "react";
 import styles from "./FilterCountries.module.css"
-import {useDispatch} from "react-redux"
-import { alphabeticalOrder, filterByContinent, resetFilters, populationOrder } from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux"
+import { alphabeticalOrder, filterByContinent, resetFilters, populationOrder, getActivities, filterByActivities } from "../../redux/actions";
+import { useEffect } from "react";
 
 const FilterCountries = () =>{
   const dispatch = useDispatch()
+  const activities = useSelector(state => state.activities)
 
   function checkClick(e){
     if(e.target.childElementCount > 0){
@@ -14,12 +16,15 @@ const FilterCountries = () =>{
       return value
     }
   }
+  useEffect(()=>{
+    dispatch(getActivities())
+  }, [dispatch])
 
   function handleFilterContinent(e){
     dispatch(filterByContinent(checkClick(e)))
   }
   function handleFilterActivitie(e){
-    console.log("The activity is: " + checkClick(e))
+    dispatch(filterByActivities(checkClick(e)))
   }
   function handleAlphabeticalOrder(e){
     dispatch(alphabeticalOrder(checkClick(e)))
@@ -30,8 +35,6 @@ const FilterCountries = () =>{
   function handleReset(){
     dispatch(resetFilters())
   }
-
-
   return(
     <div>
       <ul className={`${styles.menu} ${styles.cf}`}>
@@ -53,8 +56,11 @@ const FilterCountries = () =>{
         <li>
           <p>Filter by activity</p>
           <ul onClick={e => handleFilterActivitie(e)} className={styles.submenu}>
-            <li><p>some activitie 1</p></li>
-            <li><p>some activitie 2</p></li>
+            {
+              activities?.map(act => {
+                return <li key={act.id}><p>{act.name}</p></li>
+              })
+            }
           </ul>			
         </li>
         <li>
