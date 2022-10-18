@@ -60,7 +60,7 @@ const DetailCountryCard = () =>{
           </div>
       )
     }else{
-      <Loader/>
+      return <Loader/>
     }
   }
 

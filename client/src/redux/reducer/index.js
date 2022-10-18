@@ -20,13 +20,18 @@ const rootReducer = (state = initialState, action) =>{
         ...state,
         country: action.payload
       }
+    case types.GET_COUNTRY:
+      return {
+        ...state,
+        filter_state: action.payload
+      }
     case types.FILTER_BY_CONTINENT:
       let continentFilter = state.countries.filter(e => e.continent === action.payload)
       return {
         ...state,
         filter_state: continentFilter
       }
-    case types.ALPHABETICAL_ORDER:
+    case types.FILTER_BY_ALPHABETICAL_ORDER:
       if(action.payload === "From A to Z"){
         let alphaOrderAsc = [...state.countries].sort((a, b)=>{
           let nameA = a.name.toLowerCase()
@@ -53,7 +58,7 @@ const rootReducer = (state = initialState, action) =>{
         }
       }
       break;
-    case types.POPULATION_ORDER:
+    case types.FILTER_BY_POPULATION_ORDER:
       if(action.payload === "Lower to Higher"){
         let popOrderAsc = [...state.countries].sort((a, b)=>{
           return a.population - b.population
@@ -99,8 +104,8 @@ const rootReducer = (state = initialState, action) =>{
               activities: [...state.activities, action.payload]
               }
       }
-    case types.FILTER_ACTIVITIES:
-      let countries = [...state.countries]
+    case types.FILTER_BY_ACTIVITIES:
+      let countries = [...state.filter_state]
       let arrCountries = []
       for (let i = 0; i < countries.length; i++) {
         if(countries[i].activity.length >= 1){

@@ -41,7 +41,7 @@ const CardContainer = () =>{
 
   return(
     <div className={styles.main}>
-      <FilterCountries className={styles.filterBoxes}/>
+      <FilterCountries setCurrentPage={setCurrentPage} className={styles.filterBoxes}/>
       <div className={styles.container}>
         { allCountries?.length === 0? <h2>We didn't found any country with that name, please try again</h2> :
           allCountries? allCountries?.map(country =>{

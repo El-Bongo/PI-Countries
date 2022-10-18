@@ -39,7 +39,7 @@ export const getActivities = () => async (dispatch) =>{
 }
 export const filterByActivities = (data) => async (dispatch) =>{
   return dispatch({
-    type: types.FILTER_ACTIVITIES,
+    type: types.FILTER_BY_ACTIVITIES,
     payload: data
   })
 }
@@ -65,13 +65,13 @@ export const filterByContinent = (data) =>{
 }
 export const alphabeticalOrder = (data) =>{
   return {
-    type: types.ALPHABETICAL_ORDER,
+    type: types.FILTER_BY_ALPHABETICAL_ORDER,
     payload: data
   }
 }
 export const populationOrder = (data) =>{
   return {
-    type: types.POPULATION_ORDER,
+    type: types.FILTER_BY_POPULATION_ORDER,
     payload: data
   }
 }

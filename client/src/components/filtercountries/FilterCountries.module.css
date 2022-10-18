@@ -120,7 +120,7 @@
 }
 .menu > li {
   margin: 20px;
-  width: 200px;
+  width: 220px;
   z-index: 2;
   background: var(--main);
   float: left;
@@ -144,8 +144,8 @@
 }
 .submenu {
   position: absolute;
-  width: 200px;
-  left: 50%; margin-left: -100px;
+  width: 220px;
+  left: 50%; margin-left: -110px;
   transform-origin: left top;
 }
 .submenu li {

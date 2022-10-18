@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./FilterCountries.module.css"
 import {useDispatch, useSelector} from "react-redux"
 import { alphabeticalOrder, filterByContinent, resetFilters, populationOrder, getActivities, filterByActivities } from "../../redux/actions";
 import { useEffect } from "react";
 
-const FilterCountries = () =>{
+const FilterCountries = ({setCurrentPage}) =>{
   const dispatch = useDispatch()
   const activities = useSelector(state => state.activities)
 
@@ -16,25 +16,32 @@ const FilterCountries = () =>{
       return value
     }
   }
+
   useEffect(()=>{
     dispatch(getActivities())
   }, [dispatch])
-
+  
   function handleFilterContinent(e){
     dispatch(filterByContinent(checkClick(e)))
+    setCurrentPage(1)
   }
   function handleFilterActivitie(e){
     dispatch(filterByActivities(checkClick(e)))
+    setCurrentPage(1)
   }
   function handleAlphabeticalOrder(e){
     dispatch(alphabeticalOrder(checkClick(e)))
+    setCurrentPage(1)
   }
   function handlePopulationOrder(e){
     dispatch(populationOrder(checkClick(e)))
+    setCurrentPage(1)
   }
-  function handleReset(){
+  function handleReset(){ 
     dispatch(resetFilters())
+    setCurrentPage(1)
   }
+
   return(
     <div>
       <ul className={`${styles.menu} ${styles.cf}`}>
